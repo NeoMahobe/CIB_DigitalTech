@@ -1,0 +1,134 @@
+{
+	"info": {
+		"_postman_id": "fd4dc98c-f006-42ed-a7c5-f7d24e3c29de",
+		"name": "Dog_Api_Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28213944"
+	},
+	"item": [
+		{
+			"name": "retrieveAllDogBreads",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Assert response is 200\r",
+							"pm.test('Status code is 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"//Verify retriever object is within the response list\r",
+							"pm.test(\"Verify - retriever is within list\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message.retriever).to.exist;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/breeds/list/all",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"breeds",
+						"list",
+						"all"
+					]
+				},
+				"description": "\nThis API endpoint performs an HTTP GET request to retrieve a list of all dog breeds. The request is sent to the URL `{{BaseUrl}}/breeds/list/all`.\n\nThe response returned from the last execution of this request had a status code of 200. The response body contains a JSON object with two properties: `message` and `status`. \n\nThe `message` property contains a nested object where each key represents a dog breed and its corresponding value is an array of sub-breeds. If a breed does not have any sub-breeds, the value is an empty array. For example, the breed \"affenpinscher\" does not have any sub-breeds, so its value is an empty array. On the other hand, the breed \"australian\" has one sub-breed, so its value is an array with one element.\n\nHere is an example of the structure of the `message` property in the response:\n\n```json\n{\n  \"affenpinscher\": [],\n  \"african\": [],\n  \"airedale\": [],\n  ...\n  \"australian\": [\"\"],\n  ...\n}\n```\n\nThe `status` property in the response is empty.\n\nPlease note that the response may vary depending on the server's data. The list of dog breeds and sub-breeds may change over time.\n\nTo use this API endpoint, send an HTTP GET request to the specified URL. No request parameters are required.\n\nExample request:\n```\nGET {{BaseUrl}}/breeds/list/all\n```\n\nExample response:\n```json\n{\n  \"message\": {\n    \"affenpinscher\": [],\n    \"african\": [],\n    \"airedale\": [],\n    ...\n    \"australian\": [\"\"],\n    ...\n  },\n  \"status\": \"\"\n}\n```\n"
+			},
+			"response": []
+		},
+		{
+			"name": "retrieveSubBreeds",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Assert response is status 200\r",
+							"pm.test('Status code is 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"// Define the expected breeds\r",
+							"const expectedBreeds = [\"chesapeake\", \"curly\", \"flatcoated\", \"golden\"];\r",
+							"\r",
+							"// Parse the JSON response\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"// Check if all expected breeds are included in the \"message\" array\r",
+							"const includedBreeds = expectedBreeds.filter(breed => jsonData.message.includes(breed));\r",
+							"console.log(includedBreeds)\r",
+							"\r",
+							"// Assert the test based on the inclusion of breeds\r",
+							"tests[\"All breeds are included in the response payload\"] = includedBreeds.length === expectedBreeds.length;\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/breed/{{subBreed}}/list",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"breed",
+						"{{subBreed}}",
+						"list"
+					]
+				},
+				"description": "This API endpoint is used to retrieve a list of sub-breeds for a specific breed of dog. It is an HTTP GET request that should be made to the following URL: `{{baseUrl}}/breed/{{subBreed}}/list`.\n\n### Request Parameters\n\n- `subBreed` (required): The specific breed of dog for which you want to retrieve the list of sub-breeds.\n    \n\n### Response\n\nThe response will have a status code of 200 if the request is successful. The response body will be in JSON format and will contain the following properties:\n\n- `message`: An array of sub-breeds for the specified breed. In this case, the response is an empty array `[\"\"]`, indicating that there are no sub-breeds for the breed.\n- `status`: A status message. In this case, the value is an empty string `\"\"`.\n    \n\nPlease note that the response may vary depending on the specific breed and its sub-breeds.\n\n### Example\n\nRequest:\n\n```\nGET {{baseUrl}}/breed/labrador/list\n\n ```\n\nResponse:\n\n```\nStatus: 200 OK\n{\n    \"message\": [\"\"],\n    \"status\": \"\"\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "retrieveRandomImage",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Assert response is status 200\r",
+							"pm.test('Status code is 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/breeds/image/random",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"breeds",
+						"image",
+						"random"
+					]
+				},
+				"description": "This API endpoint allows you to retrieve a random image of a dog breed.\n\nTo make a request, send an HTTP GET request to `{{baseUrl}}/breeds/image/random`.\n\n### Request Parameters\n\nThis endpoint does not require any request parameters.\n\n### Response\n\nThe response will have a status code of 200 if the request is successful. The response body will contain a JSON object with the following properties:\n\n- `message`: A string representing the URL of the random dog breed image.\n- `status`: A string representing the status of the request.\n    \n\nExample response body:\n\n``` json\n{\n    \"message\": \"https://images.dog.ceo/breeds/hound-afghan/n02088094_1003.jpg\",\n    \"status\": \"success\"\n}\n\n ```\n\nPlease note that the `message` property will contain a different URL for each request, providing a random image of a dog breed.\n\nIf the request fails, the response status code will be different and the response body may contain additional error information."
+			},
+			"response": []
+		}
+	]
+}
