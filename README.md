@@ -2,7 +2,7 @@
 
 The purpose of the project is to test my level of proficiency through automating requirements.
 
-Test scnearios covered:
+Test scenarios covered:
 
 - retrieveAllDogBreeds
 
@@ -12,7 +12,7 @@ Test scnearios covered:
 
 ## Source
 
-- Swagger doc
+- Documentation
 https://dog.ceo/dog-api/documentation/
 
 - Postman dowloadad
